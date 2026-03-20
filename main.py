@@ -1,47 +1,43 @@
 import os
-import importlib
 from dotenv import load_dotenv
 from config.data_types import DATA_TYPES
+from core.initial_pipeline import DataPipeline
+from core.data_cleaner import DataCleaner
+from pathlib import Path
 
 load_dotenv()
 
 def main():
+    BASE_DIR = Path(__file__).resolve().parent
 
-    # data_type = os.getenv("DATA_TYPE")
-    raw_file_name = os.getenv("RAW_FILE_NAME")
-    processed_file_name = os.getenv("PROCESSED_FILE_NAME")
+    # region Initial Treatment
 
-    for data_type in DATA_TYPES:
-        # if not data_type:
-        #     raise ValueError("DATA_TYPE not defined in .env")
+    # Parte abaixo comentada para não ser executada novamente
 
-        base_path = os.path.join("data_types", data_type, 'data')
+    # raw_file_name = os.getenv("RAW_FILE_NAME")
+    # processed_file_name = os.getenv("PROCESSED_FILE_NAME")
 
-        scraper_module = importlib.import_module(
-            f"data_types.{data_type}.scraper"
-        )
+    # pipeline = DataPipeline(
+    #     data_types=DATA_TYPES,
+    #     raw_file_name=raw_file_name,
+    #     processed_file_name=processed_file_name,
+    # )
 
-        csv_module = importlib.import_module(
-            f"data_types.{data_type}.csv_manager"
-        )
+    # pipeline.run()
 
-        scraper = scraper_module.Scraper()
-        csv_manager = csv_module.CSVManager()
+    # end region
 
-        print("Starting scraping process...")
-        data = scraper.collect_full_year()
+    data_to_clean = BASE_DIR / os.getenv("DATA_TO_CLEAN")
+    clean_output_path = BASE_DIR / os.getenv("CLEAN_OUTPUT_PATH")
 
-        raw_output_path = os.path.join(base_path, raw_file_name)
-        processed_output_path = os.path.join(base_path, processed_file_name)
+    # Etapa de limpeza adicional
+    cleaner = DataCleaner(
+        input_path=data_to_clean,
+        output_path=clean_output_path,
+    )
 
-        print("Saving raw file...")
-        csv_manager.save(data, raw_output_path)
-
-        print("Processing file...")
-        csv_manager.process(raw_output_path, processed_output_path)
-
-        print("Process completed successfully.")
-
+    print("Starting data cleaning...")
+    cleaner.run()
 
 if __name__ == "__main__":
     main()

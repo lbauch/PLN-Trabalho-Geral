@@ -12,7 +12,6 @@ processed_file_name = os.getenv("PROCESSED_FILE_NAME")
 # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 arquivos = [
-    # os.path.join(BASE_DIR, 'data_types', data_type, file_name)
     os.path.join('data_types', data_type, 'data', file_name)
     for data_type in DATA_TYPES
     for file_name in (raw_file_name, processed_file_name)
