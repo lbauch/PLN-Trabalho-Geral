@@ -1,9 +1,11 @@
 import os
 from dotenv import load_dotenv
-from config.data_types import DATA_TYPES
-from core.initial_pipeline import DataPipeline
-from core.data_cleaner import DataCleaner
 from pathlib import Path
+# from config.data_types import DATA_TYPES
+# from core.initial_pipeline import DataPipeline
+from core.data_cleaner import DataCleaner
+from core.text_processor import TextProcessor
+
 
 load_dotenv()
 
@@ -23,21 +25,40 @@ def main():
     #     processed_file_name=processed_file_name,
     # )
 
+    # print("Starting data pipeline...")
     # pipeline.run()
+    # print("Data pipeline completed.")
 
-    # end region
+    #endregion
 
-    data_to_clean = BASE_DIR / os.getenv("DATA_TO_CLEAN")
-    clean_output_path = BASE_DIR / os.getenv("CLEAN_OUTPUT_PATH")
+    # region Cleaning & Indexing
+
+    # Parte abaixo comentada para não ser executada novamente
 
     # Etapa de limpeza adicional
-    cleaner = DataCleaner(
-        input_path=data_to_clean,
-        output_path=clean_output_path,
+    # cleaner = DataCleaner(
+    #     input_path = BASE_DIR / os.getenv("DATA_TO_CLEAN"),
+    #     output_path = BASE_DIR / os.getenv("CLEAN_OUTPUT_PATH")
+    # )
+
+    # print("Starting data cleaning...")
+    # cleaner.run()
+    # print("Data cleaning completed.")
+
+    #endregion
+
+    # region MINHA NOVA REGIÃO
+
+    text_processor = TextProcessor(
+        input_path = BASE_DIR / os.getenv("CLEAN_OUTPUT_PATH"),
+        output_path = BASE_DIR / os.getenv("TOKENIZED_OUTPUT_PATH"),
     )
 
-    print("Starting data cleaning...")
-    cleaner.run()
+    print("Starting text processing...")
+    text_processor.run()
+    print("Text processing completed.")    
+
+    #endregion
 
 if __name__ == "__main__":
     main()
