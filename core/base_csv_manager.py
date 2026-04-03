@@ -3,6 +3,10 @@ import pandas as pd
 from abc import ABC, abstractmethod
 
 class BaseCSVManager(ABC):
+    """
+    Usada para tratar com o arquivo .csv.
+    Possui métodos que devem ser sobrescritos para cada tipo de tratativa (data_type)
+    """
 
     def save(self, data, output_path):
         with open(output_path, "w", newline="", encoding="utf-8") as file:

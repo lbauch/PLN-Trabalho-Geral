@@ -2,6 +2,10 @@ import pandas as pd
 
 
 class DataCleaner:
+    """
+    Adiciona colunas necessárias para a análise e reorganiza a ordem das colunas do .csv
+    Não envolve lematização, stemming ou outras tratativas mais avançadas.
+    """
     def __init__(self, input_path, output_path):
         self.input_path = input_path
         self.output_path = output_path

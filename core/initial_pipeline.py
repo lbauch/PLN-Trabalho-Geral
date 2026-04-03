@@ -3,6 +3,12 @@ import importlib
 
 
 class DataPipeline:
+
+    """
+    Contém o fluxo para fazer o webscrapping e salvar em um
+    arquivo .csv para cada tipo de texto final (data_type)
+    """
+
     def __init__(self, data_types, raw_file_name, processed_file_name):
         self.data_types = data_types
         self.raw_file_name = raw_file_name

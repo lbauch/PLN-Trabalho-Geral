@@ -3,12 +3,16 @@ import requests
 from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-from core.date_csv_generator import generate_year_dates
+from core.date_generator import generate_year_dates
 
 load_dotenv()
 
 
 class BaseScraper(ABC):
+    """
+    Usada para fazer a extração dos arquivos via Scrapping
+    Possui métodos que devem ser sobrescritos para cada tipo de tratativa (data_type)
+    """
 
     def __init__(self):
         self.base_url = os.getenv("BASE_URL")
@@ -28,6 +32,7 @@ class BaseScraper(ABC):
             "death_date": str
         }
         or None
+        Varia para cada formato que se deseja salvar o arquivo (data_type)
         """
         raise ValueError('Static Method Not Implemented')
 
