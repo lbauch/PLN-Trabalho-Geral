@@ -1,3 +1,7 @@
+Todos os arquivos e pastas que possuírem _desconsiderada ao final, são arquivos que foram utilizados
+em um determinado momento para análise, mas foram posteriormente descartados e não foram utilizados
+na análise final.
+
 A classe main está com o fluxo comentado para não ficar executando novamente todos os passos a cada execução.
 Caso se deseje executar todo o fluxo, é possível definir (em config) quas tipos de texto se deseja extrair e descomentar as linhas de main, contemplando todas as etapas.
 
