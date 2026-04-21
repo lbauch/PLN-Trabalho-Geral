@@ -10,9 +10,7 @@ A pasta_data_types, possui as tratativas para cada extração dos textos por web
 Os arquivos dentro de core foram utilizados até estes passos, dentro da classe main.py.
 
 Para os passos seguintes, como lematização, stemming, tokenização, remoção de stopwords, adição de colunas essenciais para a análise futura e análise de BoW e TF-ID, optou-se pelo uso do data_type get_text_split_words.
-Para análise mais acurada, estas tratativas mais complexas foram feitas no arquivo .ipynb dentro de analysis, fazendo uma análise de BoW e TF-IDF das seguintes combinações:
-1) Usando a coluna description_lower: remoção de stopwords > lematização
-2) Usando a coluna description_lower: remoção de stopwords > stemming
-3) Usando a coluna description_lower: lematização > remoção de stopwords
-4) Usando a coluna description_lower: stemming > remoção de stopwords
-5 - 8) Mesmos passos utilizando a coluna description para a análise.
+Para análise mais acurada, estas tratativas mais complexas foram feitas no arquivo data_preparation_and_analysis.ipynb dentro de analysis, fazendo uma análise de BoW e TF-IDF das seguintes combinações, todas utilizando a coluna description_lower:
+1) lower_stop: Apenas remoção de stopwords
+2) lower_stop_lemma: remoção de stopwords > lematização
+3) lower_stop_stem: remoção de stopwords > stemming
