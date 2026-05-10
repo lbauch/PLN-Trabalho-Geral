@@ -21,7 +21,7 @@ class Scraper():
             raise ValueError("BASE_URL not defined in .env")
 
 
-    def extract_fields(self, tds):
+    def _extract_fields(self, tds):
         if len(tds) >= 1:
             description = tds[0].get_text(" ", strip=True)
         else:
@@ -63,7 +63,7 @@ class Scraper():
 
                 for row in rows:
                     tds = row.find_all("td")
-                    result = self.extract_fields(tds)
+                    result = self._extract_fields(tds)
 
                     if result:
                         result["date"] = date

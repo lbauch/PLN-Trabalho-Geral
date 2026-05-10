@@ -1,42 +1,35 @@
 import os
 from dotenv import load_dotenv
 from pathlib import Path
-from core.extract_save import DataPipeline
-from core.data_cleaner import DataCleaner
-
-load_dotenv()
+from utils.scrapper import Scraper
+from utils.csv_manager import CSVManager
 
 def main():
     """
     Contém o fluxo das tratativas iniciais (scrapping, salvamento e ajustes)
     """
+    load_dotenv()
     BASE_DIR = Path(__file__).resolve().parent
 
-    # region Initial Treatment
-
+    # region Scrap and Treatment
     raw_file_name = os.getenv("RAW_FILE_NAME")
-    processed_file_name = os.getenv("PROCESSED_FILE_NAME")
+    pre_processed_file_name = os.getenv("PRE_PROCESSED_FILE_NAME")
 
-    pipeline = DataPipeline(
-        raw_file_name=raw_file_name,
-        processed_file_name=processed_file_name,
-    )
+    raw_output_path = BASE_DIR / "data_output" / raw_file_name
+    processed_output_path = BASE_DIR / "data_output" / pre_processed_file_name
 
-    print("Starting data extraction...")
-    pipeline.run()
+    print(f"Starting scraping process...")
+    data = Scraper().collect_full_year()
 
+    print(f"Saving raw file...")
+    CSVManager().save(data, raw_output_path)
+
+    print(f"Processing file...")
+    CSVManager().pre_process(raw_output_path, processed_output_path)
+
+    print(f"Process completed successfully.\n")
     #endregion
 
-    # region Cleaning & Indexing
-
-    # Etapa de limpeza adicional
-    cleaner = DataCleaner(
-        input_path = BASE_DIR / os.getenv("DATA_TO_CLEAN"),
-        output_path = BASE_DIR / os.getenv("CLEAN_OUTPUT_PATH")
-    )
-
-    print("Starting data cleaning...")
-    cleaner.run()
 
 if __name__ == "__main__":
     main()
