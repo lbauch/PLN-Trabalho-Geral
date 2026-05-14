@@ -33,13 +33,13 @@ class CSVManager():
     def _remove_prefix(self, text: str) -> str:
         """
         Remove prefixos dos tipos:
-        "2.", "3*.", "8♦.", "5", "10♦"
+        "2.", "3*.", "8♦.", "5", "10♦", "12 ♦"
         Apenas quando aparecem no início da string.
         """
         if not isinstance(text, str):
             return text  # evita erro caso seja NaN ou outro tipo
         
-        pattern = r'^\d{1,2}[*♦]?\.?\s*'
+        pattern = r'^\d{1,2}\s*[*♦]?\.?\s*'
         return re.sub(pattern, '', text)
 
 
